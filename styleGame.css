@@ -21,18 +21,47 @@ body {
 
 .map {
     width: 95%;
-    height: 90%;
+    height: 95%;
     background-color: white;
     grid-column: 1;
     grid-row: 2;
-    margin-left: 2em;
+    margin-left: 1em;
+
+    display: grid;
+    grid-template-columns: repeat(8, 90px);
+    grid-template-rows: repeat(5, 90px);
+    gap: 0;
 }
 
 .information {
     width: 90%;
-    height: 90%;
+    height: 95%;
     background-color: #777777;
     grid-column: 2;
     grid-row: 2;
-    margin-left: 1em;
+    margin-left: 2em;
+}
+
+
+/* map style*/
+
+.tile {
+    width: 90px;
+    height: 90px;
+    background-size: cover;
+}
+.forest{
+    background-color: greenyellow;
+}
+.lake{
+    background-color: #8EBCF4;
+}
+.empty {
+    background-color: #eee;
+}
+.tree{
+    background-color: saddlebrown;
+}
+.house{
+    background-color: hotpink;
 }

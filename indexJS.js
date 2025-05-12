@@ -4,11 +4,13 @@ function openGame(){
 
 function generateMap(){
     let map =
-        [["f", " ", " ", " ", " ", " ", " ", " "], //f-forest
-        [" ", " ", " ", "t", " ", " ", " ", " "],  //t-tree
-        [" ", " ", " ", " ", " ", " ", " ", " "],
-        [" ", "l", " ", " ", " ", " ", " ", " "],  //l-lake
-        [" ", " ", " ", " ", "h", " ", " ", " "]]; //h-main character house
+        [
+            ["f", " ", " ", " ", " ", " ", " ", " "], //f-forest
+            [" ", " ", " ", "t", " ", " ", " ", " "],  //t-tree
+            [" ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", "l", " ", " ", " ", " ", " ", " "],  //l-lake
+            [" ", " ", " ", " ", "h", " ", " ", " "]   //h-main character house
+        ];
 
     for(let i = 0; i < map.length; i++){
         for(let j = 0; j < map[i].length; j++){
@@ -32,8 +34,34 @@ function generateMap(){
 
         }
     }
+    let player = document.createElement("div");
+    player.classList.add("player");
+    document.querySelector(".map").appendChild(player);
 }
+let playerPosition = {x: 1, y: 2};
+let tileSize = 90;
+
+function updatePlayerPosition(){
+  let player = document.querySelector(".player");
+  player.style.left = `${playerPosition.x * tileSize}px`;
+  player.style.top = `${playerPosition.y* tileSize}px`;
+}
+
+document.addEventListener("keydown", (e) => {
+    if(e.key === "ArrowUp") {
+        if(playerPosition.y > 0) playerPosition.y--; /*problem*/
+    }else if(e.key === "ArrowDown") {
+        if(playerPosition.y < 4) playerPosition.y++;
+    }else if(e.key === "ArrowLeft") {
+        if(playerPosition.x > 0) playerPosition.x--; /*problem*/
+    }else if(e.key === "ArrowRight") {
+        if(playerPosition.x < 7) playerPosition.x++;
+    }
+
+    updatePlayerPosition();
+})
 
 window.onload = function (){
     generateMap();
+    updatePlayerPosition();
 }

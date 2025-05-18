@@ -8,7 +8,7 @@ body {
 
 .title {
     font-size: 2rem;
-    margin: 1em auto;
+    margin: 0.5em auto;
     color: #7DA87B;
     text-align: center;
     width: 100%;
@@ -16,7 +16,7 @@ body {
 
 .game {
     display: flex;
-    margin: 2em;
+    margin: 1em;
     gap: 2em;
 }
 
@@ -32,6 +32,18 @@ body {
     color: white;
     padding: 1em;
     width: 30em;
+}
+.howTo{
+    display: flex;
+
+    ul{
+        display: inline-flex;
+        list-style: none;
+        gap: 1em;
+        margin-left: 4em;
+        color: #7DA87B;
+
+    }
 }
 
 .tile {
@@ -69,3 +81,49 @@ body {
     z-index: 10;
     transition: top 0.1s ease, left 0.1s ease;
 }
+.dialog {
+    bottom: 2em;
+    left: 2em;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 1em 1.5em;
+    background: white;
+    color: #333;
+    border: 2px solid #666;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    font-size: 1.1rem;
+    z-index: 20;
+    max-width: 400px;
+}
+
+.hidden {
+    display: none;
+}
+
+.portrait {
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.dialog p {
+    margin: 0;
+}
+.hint {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #999;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 0.9rem;
+    color: #333;
+    transform: translate(-10%, -120%);
+    z-index: 15;
+    pointer-events: none;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
+

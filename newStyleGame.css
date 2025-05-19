@@ -57,11 +57,11 @@ body {
 }
 
 .lake {
-    background-color: #8EBCF4;
+    background-image: url("/images/lake.jpg");
 }
 
 .empty {
-    background-color: #eee;
+    background-image: url("/images/empty.jpg");
 }
 
 .tree {
@@ -69,8 +69,7 @@ body {
 }
 
 .house {
-    background-image: url("/images/img.png");
-    background-color: greenyellow;
+    background-image: url("/images/house.jpg");
 }
 
 .player {

@@ -15,6 +15,13 @@ const mapHeight = 5;
 let playerPosition = {x: 1, y: 1};
 let hint;
 
+let berriesCollected = 0;
+let berryQuestStarted = false;
+let berryQuestAccepted = false;
+let berryQuestCompleted = false;
+let forestReady = false;
+
+
 function generateMap() {
     const map = document.querySelector(".map");
 
@@ -92,34 +99,135 @@ document.addEventListener("keydown", (e) => {
     //dialog with home
     let x = playerPosition.x;
     let y = playerPosition.y;
-    if (
-        mapData[y - 1]?.[x] === "h" ||
-        mapData[y + 1]?.[x] === "h" ||
-        mapData[y]?.[x - 1] === "h" ||
-        mapData[y]?.[x + 1] === "h"
-    ) {
+    const adjacentTile = [
+        mapData[y - 1]?.[x],
+        mapData[y + 1]?.[x],
+        mapData[y]?.[x - 1],
+        mapData[y]?.[x + 1]
+    ];
+
+//hints for special tiles
+    let nearHouse = adjacentTile.includes("h");
+    let nearTree = adjacentTile.includes("t");
+    let nearLake = adjacentTile.includes("l");
+    let nearForest = adjacentTile.includes("f") && berryQuestAccepted;
+
+    if (nearHouse || nearTree || nearLake || nearForest) {
         hint.classList.remove("hidden");
         hint.style.left = `${x * tileSize + 10}px`;
         hint.style.top = `${y * tileSize}px`;
     } else {
         hint.classList.add("hidden");
     }
-    if(e.key === "e" || e.key === "E"){
-        if(mapData[y-1]?.[x] === "h" || mapData[y+1]?.[x] === "h" || mapData[y]?.[x-1] === "h" || mapData[y]?.[x+1] === "h"){
+
+    if(e.key === "e" || e.key === "E") {
+        if (mapData[y - 1]?.[x] === "h" || mapData[y + 1]?.[x] === "h" || mapData[y]?.[x - 1] === "h" || mapData[y]?.[x + 1] === "h") {
             let dialog = document.querySelector(".dialog");
             dialog.classList.remove("hidden");
-            document.addEventListener("keydown", (e) => {
-                if (e.key === "Enter") {
-                    const dialog = document.querySelector(".dialog");
-                    dialog.classList.add("hidden");
-                }
-            });
+            dialog.querySelector("p").textContent = "Nie ma to jak w domu!";
+            dialog.querySelector("img.portrait").src = "images/NPC.jpg";
 
         }
     }
+    if(e.key === "e" || e.key === "E") {
+        // dialog with tree - start of quest
+        if (!berryQuestStarted &&
+            (mapData[y - 1]?.[x] === "t" || mapData[y + 1]?.[x] === "t" || mapData[y]?.[x - 1] === "t" || mapData[y]?.[x + 1] === "t")) {
+
+            berryQuestStarted = true;
+            let dialog = document.querySelector(".dialog");
+            dialog.classList.remove("hidden");
+            dialog.querySelector("p").textContent = "Witaj sąsiedzie, potrzebuję twojej pomocy. Piekę ciasto ale zapomniałam o jagodach, czy możesz je dla mnie zebrać w lesie?";
+            dialog.querySelector("img.portrait").src = "images/squirrel.jpg";
+
+            setTimeout(() => {
+                updateInfoBox("Czy chcesz pomóc zebrać jagody? (Naciśnij Y - Tak, N - Nie)");
+            }, 3000);
+        }
+
+
+        document.addEventListener("keydown", function acceptQuest(ev) {
+            if (!berryQuestAccepted && berryQuestStarted) {
+                if (ev.key === "y" || ev.key === "Y") {
+                    berryQuestStarted = true;
+                    berryQuestAccepted = true;
+                    let dialog = document.querySelector(".dialog");
+                    dialog.classList.add("hidden");
+                    updateInfoBox("Zbieraj jagody w lesie!", berriesCollected);
+                    flashForestTile();
+                    document.removeEventListener("keydown", acceptQuest);
+                } else if (ev.key === "n" || ev.key === "N") {
+                    let dialog = document.querySelector(".dialog");
+                    dialog.classList.add("hidden");
+
+                    let question = document.querySelector(".question");
+                    question.classList.add("hidden");
+
+                    berryQuestStarted = false;
+
+                    document.removeEventListener("keydown", acceptQuest);
+                }
+            }
+        });
+
+        // collecting berries
+        if (berryQuestAccepted && forestReady &&
+            (mapData[y - 1]?.[x] === "f" || mapData[y + 1]?.[x] === "f" || mapData[y]?.[x - 1] === "f" || mapData[y]?.[x + 1] === "f")) {
+
+            berriesCollected++;
+            updateInfoBox("🍓 Zbieraj jagody w lesie!", berriesCollected);
+            if (berriesCollected === 3) {
+                forestReady = false;
+                document.querySelector(".forest").classList.remove("glow");
+            }
+        }
+    }
+    //end of quest
+    if(e.key === "e" || e.key === "E"){
+            if (berriesCollected === 3 && !berryQuestCompleted &&
+                (mapData[y - 1]?.[x] === "t" || mapData[y + 1]?.[x] === "t" || mapData[y]?.[x - 1] === "t" || mapData[y]?.[x + 1] === "t")) {
+
+                berryQuestCompleted = true;
+                let dialog = document.querySelector(".dialog");
+                dialog.classList.remove("hidden");
+                dialog.querySelector("p").textContent = "Dziękuję bardzo sąsiedzie!";
+                updateInfoBox("Zadanie zakończone.");
+                setTimeout(() => {
+                    let questionBox = document.querySelector(".question");
+                    questionBox.classList.add("hidden");
+                }, 3000);
+            }
+        }
 });
+
+//progress bar
+function updateInfoBox(text = "", berries = null) {
+    let questionBox = document.querySelector(".question");
+    questionBox.classList.remove("hidden");
+
+    let html = `<p>${text}</p>`;
+    if (berries !== null) {
+        html += `<p>Jagody: ${berries}/3</p>`;
+    }
+    questionBox.innerHTML = html;
+}
+
+//flashing forest tile
+function flashForestTile() {
+    const tile = document.querySelector(".forest");
+
+    tile.classList.add("glow");
+    forestReady = true;
+}
+
 
 window.onload = function () {
     generateMap();
     updatePlayerPosition();
 };
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        let dialog = document.querySelector(".dialog");
+        dialog.classList.add("hidden");
+    }
+});

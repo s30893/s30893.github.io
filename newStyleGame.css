@@ -97,6 +97,23 @@ body {
     z-index: 20;
     max-width: 400px;
 }
+.question{
+    bottom: 2em;
+    left: 2em;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 1em 1.5em;
+    background: white;
+    color: #333;
+    border: 2px solid #666;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    font-size: 1.1rem;
+    z-index: 20;
+    max-width: 400px;
+}
 
 .hidden {
     display: none;
@@ -124,5 +141,14 @@ body {
     z-index: 15;
     pointer-events: none;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
+.glow {
+    animation: pulse 1.2s infinite;
+    box-shadow: 0 0 15px #7DA87B;
+}
+@keyframes pulse {
+    0% { box-shadow: 0 0 5px #7DA87B; }
+    50% { box-shadow: 0 0 10px  black; }
+    100% { box-shadow: 0 0 5px #7DA87B; }
 }
 

@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ed1d5261-7eac-4bb6-9910-94082aebeea1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/styleThanks.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/thanks.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gamePageNew.html" beforeDir="false" afterPath="$PROJECT_DIR$/gamePageNew.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/newJSFile.js" beforeDir="false" afterPath="$PROJECT_DIR$/newJSFile.js" afterDir="false" />
@@ -21,9 +23,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="JavaScript File" />
         <option value="HTML File" />
         <option value="CSS File" />
-        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -90,6 +92,8 @@
       <workItem from="1747771279309" duration="14000" />
       <workItem from="1747836272741" duration="3381000" />
       <workItem from="1748286549433" duration="5509000" />
+      <workItem from="1748374669745" duration="4987000" />
+      <workItem from="1748379783748" duration="8000" />
     </task>
     <servers />
   </component>

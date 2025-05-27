@@ -28,10 +28,18 @@ body {
 }
 
 .information {
-    background-color: #777777;
+    background-color: darkseagreen;
     color: white;
     padding: 1em;
     width: 30em;
+    .name{
+        font-size: 1.5rem;
+        margin: 1px auto;
+        color: #7DA87B;
+        text-align: center;
+        width: 100%;
+        background-color: #FDF6EC;
+    }
 }
 .howTo{
     display: flex;
@@ -40,7 +48,7 @@ body {
         display: inline-flex;
         list-style: none;
         gap: 1em;
-        margin-left: 4em;
+        margin-left: 5em;
         color: #7DA87B;
 
     }
@@ -71,6 +79,9 @@ body {
 .house {
     background-image: url("/images/house.jpg");
 }
+.mountain{
+    background-color: #333333;
+}
 
 .player {
     position: absolute;
@@ -86,11 +97,12 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
+    margin-top: 1em;
+
 
     padding: 1em 1.5em;
     background: white;
     color: #333;
-    border: 2px solid #666;
     border-radius: 10px;
     box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
     font-size: 1.1rem;
@@ -103,11 +115,11 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
+    margin-top: 0.5em;
 
     padding: 1em 1.5em;
     background: white;
     color: #333;
-    border: 2px solid #666;
     border-radius: 10px;
     box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
     font-size: 1.1rem;

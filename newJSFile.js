@@ -1,10 +1,13 @@
 function openGame(){
     window.location.href = "gamePageNew.html";
 }
+function back(){
+    window.location.href= "index.html";
+}
 const mapData = [
-    ["f", " ", " ", " ", " ", " ", " ", " "],
-    [" ", " ", " ", "t", " ", " ", " ", " "],
-    [" ", " ", " ", " ", " ", " ", " ", " "],
+    ["f", " ", " ", " ", " ", " ", " ", "m"],
+    [" ", " ", " ", "t", " ", " ", " ", "m"],
+    [" ", " ", " ", " ", " ", " ", " ", "m"],
     [" ", "l", " ", " ", " ", " ", " ", " "],
     [" ", " ", " ", " ", "h", " ", " ", " "]
 ];
@@ -20,6 +23,16 @@ let berryQuestStarted = false;
 let berryQuestAccepted = false;
 let berryQuestCompleted = false;
 let forestReady = false;
+
+let cakeQuestStarted = false;
+let cakeQuestCompleted = false;
+
+let amuletQuestStarted = false;
+let amuletFound = false;
+let amuletQuestCompleted = false;
+let amuletTile = null;
+
+let endingUnlocked = false;
 
 
 function generateMap() {
@@ -41,6 +54,9 @@ function generateMap() {
             }
             else if (cell === "h") {
                 newDiv.classList.add("house");
+            }
+            else if(cell === "m") {
+                newDiv.classList.add("mountain")
             }
             else {
                 newDiv.classList.add("empty");
@@ -111,8 +127,9 @@ document.addEventListener("keydown", (e) => {
     let nearTree = adjacentTile.includes("t");
     let nearLake = adjacentTile.includes("l");
     let nearForest = adjacentTile.includes("f") && berryQuestAccepted;
+    let nearMountain = adjacentTile.includes("m") && amuletQuestStarted;
 
-    if (nearHouse || nearTree || nearLake || nearForest) {
+    if (nearHouse || nearTree || nearLake || nearForest || nearMountain) {
         hint.classList.remove("hidden");
         hint.style.left = `${x * tileSize + 10}px`;
         hint.style.top = `${y * tileSize}px`;
@@ -126,6 +143,24 @@ document.addEventListener("keydown", (e) => {
             dialog.classList.remove("hidden");
             dialog.querySelector("p").textContent = "Nie ma to jak w domu!";
             dialog.querySelector("img.portrait").src = "images/NPC.jpg";
+
+        }
+    }
+    if(e.key === "e" || e.key === "E") {
+        if (mapData[y - 1]?.[x] === "t" || mapData[y + 1]?.[x] === "t" || mapData[y]?.[x - 1] === "t" || mapData[y]?.[x + 1] === "t") {
+            let dialog = document.querySelector(".dialog");
+            dialog.classList.remove("hidden");
+            dialog.querySelector("p").textContent = "Witaj w mojej dziupli!";
+            dialog.querySelector("img.portrait").src = "images/squirrel.jpg";
+
+        }
+    }
+    if(e.key === "e" || e.key === "E") {
+        if (mapData[y - 1]?.[x] === "l" || mapData[y + 1]?.[x] === "l" || mapData[y]?.[x - 1] === "l" || mapData[y]?.[x + 1] === "l") {
+            let dialog = document.querySelector(".dialog");
+            dialog.classList.remove("hidden");
+            dialog.querySelector("p").textContent = "Spokój to podstawa. Spokój to życie.";
+            dialog.querySelector("img.portrait").src = "images/kapibara.jpg";
 
         }
     }
@@ -175,7 +210,7 @@ document.addEventListener("keydown", (e) => {
             (mapData[y - 1]?.[x] === "f" || mapData[y + 1]?.[x] === "f" || mapData[y]?.[x - 1] === "f" || mapData[y]?.[x + 1] === "f")) {
 
             berriesCollected++;
-            updateInfoBox("🍓 Zbieraj jagody w lesie!", berriesCollected);
+            updateInfoBox(" Zbieraj jagody w lesie!", berriesCollected);
             if (berriesCollected === 3) {
                 forestReady = false;
                 document.querySelector(".forest").classList.remove("glow");
@@ -190,15 +225,101 @@ document.addEventListener("keydown", (e) => {
                 berryQuestCompleted = true;
                 let dialog = document.querySelector(".dialog");
                 dialog.classList.remove("hidden");
-                dialog.querySelector("p").textContent = "Dziękuję bardzo sąsiedzie!";
+                dialog.querySelector("p").textContent = "Dziękuję bardzo sąsiedzie! Mam jeszcze jedną prośbę. Zanieś proszę to ciasto drogiemu Kapibarze.";
                 updateInfoBox("Zadanie zakończone.");
+                cakeQuestStarted = true;
                 setTimeout(() => {
-                    let questionBox = document.querySelector(".question");
-                    questionBox.classList.add("hidden");
-                }, 3000);
+                    updateInfoBox("Zanieś ciasto Kapibarze nad jezioro.");
+                }, 2000);
             }
         }
+    if (e.key === "e" || e.key === "E") {
+        if (cakeQuestStarted && !cakeQuestCompleted &&
+            (mapData[y - 1]?.[x] === "l" || mapData[y + 1]?.[x] === "l" ||
+                mapData[y]?.[x - 1] === "l" || mapData[y]?.[x + 1] === "l")) {
+
+            cakeQuestCompleted = true;
+            amuletQuestStarted = true;
+
+            let dialog = document.querySelector(".dialog");
+            dialog.classList.remove("hidden");
+            dialog.querySelector("p").textContent = "Dziękuję za ciasto! Mam kłopot, sąsiedzie. Zgubiłem mój amulet w górach. Możesz go poszukać?";
+            dialog.querySelector("img.portrait").src = "images/kapibara.jpg";
+
+            updateInfoBox("Zadanie zakończone");
+            setTimeout(() => {
+                updateInfoBox("Znajdź amulet w górach.");
+            }, 2000);
+
+            setTimeout(placeAmuletInMountains, 2000);
+        }
+    }
+    if (e.key === "e" || e.key === "E") {
+        if (amuletQuestStarted && !amuletFound &&
+            (mapData[y - 1]?.[x] === "m" || mapData[y + 1]?.[x] === "m" ||
+                mapData[y]?.[x - 1] === "m" || mapData[y]?.[x + 1] === "m")) {
+
+
+            const mapIndex = (y - 1 >= 0 && mapData[y - 1][x] === "m") ? y - 1 :
+                (y + 1 < mapHeight && mapData[y + 1][x] === "m") ? y + 1 :
+                    (mapData[y]?.[x - 1] === "m") ? y :
+                        (mapData[y]?.[x + 1] === "m") ? y : null;
+
+            if (amuletTile && amuletTile.classList.contains("amulet")) {
+                amuletFound = true;
+                amuletTile.classList.remove("amulet");
+
+                const dialog = document.querySelector(".dialog");
+                dialog.classList.remove("hidden");
+
+                updateInfoBox("Amulet znaleziony! Zanieś go z powrotem kapibarze.");
+            }
+        }
+
+        // zakończenie questa
+        if (amuletFound && !amuletQuestCompleted &&
+            (mapData[y - 1]?.[x] === "l" || mapData[y + 1]?.[x] === "l" ||
+                mapData[y]?.[x - 1] === "l" || mapData[y]?.[x + 1] === "l")) {
+
+            amuletQuestCompleted = true;
+            endingUnlocked = true;
+
+
+            let dialog = document.querySelector(".dialog");
+            dialog.classList.remove("hidden");
+            dialog.querySelector("p").textContent = "Dziękuję za odzyskanie amuletu!";
+            dialog.querySelector("img.portrait").src = "images/kapibara.jpg";
+
+            updateInfoBox("Zadanie zakończone");
+            setTimeout(() => {
+                updateInfoBox("Wróć do domku");
+            }, 3000);
+
+            let questionBox = document.querySelector(".question");
+            questionBox.classList.add("hidden");
+
+        }
+    }
+    if (e.key === "e" || e.key === "E") {
+        if (endingUnlocked &&
+            (mapData[y - 1]?.[x] === "h" || mapData[y + 1]?.[x] === "h" ||
+                mapData[y]?.[x - 1] === "h" || mapData[y]?.[x + 1] === "h")) {
+
+            window.location.href = "thanks.html";
+        }
+    }
+
+
+
 });
+function placeAmuletInMountains() {
+    const mountainTiles = document.querySelectorAll(".mountain"); // zakładamy, że "m" => class="mountain"
+    if (mountainTiles.length === 0) return;
+
+    const index = Math.floor(Math.random() * mountainTiles.length);
+    amuletTile = mountainTiles[index];
+    amuletTile.classList.add("amulet");
+}
 
 //progress bar
 function updateInfoBox(text = "", berries = null) {

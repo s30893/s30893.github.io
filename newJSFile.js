@@ -86,6 +86,7 @@ function updatePlayerPosition() {
 document.addEventListener("keydown", (e) => {
     let newX = playerPosition.x;
     let newY = playerPosition.y;
+    let player = document.querySelector(".player");
     if (e.key === "ArrowUp" && playerPosition.y > 0) {
         newY = newY - 1;
         if(mapData[newY][newX] !== " "){
@@ -103,12 +104,14 @@ document.addEventListener("keydown", (e) => {
         if(mapData[newY][newX] !== " "){
         } else{
             playerPosition.x--;
+            player.classList.add("flipped");
         }
     } else if (e.key === "ArrowRight" && playerPosition.x < mapWidth - 1) {
         newX = newX + 1;
         if(mapData[newY][newX] !== " "){
         } else{
             playerPosition.x++;
+            player.classList.remove("flipped");
         }
     }
     updatePlayerPosition();

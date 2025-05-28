@@ -87,10 +87,14 @@ body {
     position: absolute;
     width: 90px;
     height: 90px;
-    background-color: red;
+    background-image: url("/images/player.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     z-index: 10;
     transition: top 0.1s ease, left 0.1s ease;
 }
+
 .dialog {
     bottom: 2em;
     left: 2em;
@@ -163,4 +167,8 @@ body {
     50% { box-shadow: 0 0 10px  black; }
     100% { box-shadow: 0 0 5px #7DA87B; }
 }
+.player.flipped {
+    transform: scaleX(-1);
+}
+
 

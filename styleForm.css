@@ -1,0 +1,34 @@
+body {
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(to bottom, #FDF6EC, #DDEECC);
+    color: #444;
+    text-align: center;
+    padding: 3em;
+    height: 100vh;
+}
+h1 {
+    font-size: 3rem;
+    color: #7DA87B;
+}
+
+label {
+    font-size: 1.3rem;
+}
+.btn {
+    background-color: #A0C4FF;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #8EBCF4;
+    transform: scale(1.05);
+}
+form{
+
+}

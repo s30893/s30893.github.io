@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ankieta</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styleForm.css">
+    <script src="newJSFile.js"></script>
+</head>
+<body>
+<h1>Ankieta</h1>
+<form id="feedbackForm">
+    <label>
+        Jak oceniasz grę (1–5)?
+        <input type="number" name="rating" min="1" max="5" required />
+    </label><br><br>
+    <label>
+        Co Ci się najbardziej podobało?
+        <input type="text" name="liked" />
+    </label><br><br>
+    <label>
+        Sugestie lub komentarz:
+        <textarea name="comment"></textarea>
+    </label><br><br>
+
+    <button type="submit" class="btn">Wyślij</button>
+</form>
+
+<p id="thanksMessage" style="display:none;">Dziękujemy za opinię!</p>
+</body>
+</html>

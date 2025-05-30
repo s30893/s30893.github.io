@@ -73,14 +73,14 @@ body {
 }
 
 .tree {
-    background-color: saddlebrown;
+    background-image: url("/images/tree.jpg");
 }
 
 .house {
     background-image: url("/images/house.jpg");
 }
 .mountain{
-    background-color: #333333;
+    background-image: url("/images/mountain.jpg");
 }
 
 .player {

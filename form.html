@@ -5,27 +5,25 @@
     <title>Ankieta</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styleForm.css">
-    <script src="newJSFile.js"></script>
+    <script src="surveyJSFile.js"></script>
 </head>
 <body>
 <h1>Ankieta</h1>
-<form id="feedbackForm">
-    <label>
-        Jak oceniasz grę (1–5)?
-        <input type="number" name="rating" min="1" max="5" required />
-    </label><br><br>
-    <label>
-        Co Ci się najbardziej podobało?
-        <input type="text" name="liked" />
-    </label><br><br>
-    <label>
-        Sugestie lub komentarz:
-        <textarea name="comment"></textarea>
-    </label><br><br>
+<form id="surveyForm">
+    <label for="name">Imię:</label><br />
+    <input type="text" id="name" required /><br /><br />
+
+    <label for="rating">Ocena (1–5):</label><br />
+    <input type="number" id="rating" min="1" max="5" required /><br /><br />
+
+    <label for="comment">Komentarz:</label><br />
+    <textarea id="comment"></textarea><br /><br />
 
     <button type="submit" class="btn">Wyślij</button>
 </form>
 
-<p id="thanksMessage" style="display:none;">Dziękujemy za opinię!</p>
+<p id="thanksMessage" style="display: none">Dziękuje za opinię!</p>
+<button class="btn" id="home" onclick="back()" style="display: none">Powrót do strony głównej</button>
+
 </body>
 </html>

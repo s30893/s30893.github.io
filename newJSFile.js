@@ -347,29 +347,6 @@ function flashForestTile() {
     forestReady = true;
 }
 
-document.getElementById("feedbackForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const formData = new FormData(this);
-    const data = Object.fromEntries(formData.entries());
-
-    fetch("http://localhost:3000/ankieta", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-    })
-        .then(res => {
-        if (res.ok) {
-            document.getElementById("feedbackForm").style.display = "none";
-            document.getElementById("thanksMessage").style.display = "block";
-        } else {
-            alert("Błąd podczas wysyłania odpowiedzi.");
-        }
-    });
-});
-
 
 window.onload = function () {
     generateMap();

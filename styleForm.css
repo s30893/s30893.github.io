@@ -29,6 +29,14 @@ label {
     background-color: #8EBCF4;
     transform: scale(1.05);
 }
-form{
-
+input{
+    width: 12em;
+    height: 2em;
+}
+#home {
+    display: none;
+    margin: 1em auto;
+}
+p {
+    font-size: 1.3rem;
 }

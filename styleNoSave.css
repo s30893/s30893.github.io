@@ -8,35 +8,9 @@ body {
     align-items: center;
     height: 100vh;
 }
-
-.container {
-    text-align: center;
-    padding: 2em;
-    border-radius: 16px;
-    background-color: rgba(255, 255, 255, 0.85);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    max-width: 40vw;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.title {
-    margin-bottom: 0.2em;
+h1 {
+    font-size: 3rem;
     color: #7DA87B;
-    font-size: clamp(1.8rem, 5vw, 2.5rem);
-
-}
-
-.subtitle {
-    margin-bottom: 2em;
-    color: #777;
-    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-}
-
-.menu {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
 }
 
 .btn {
@@ -54,11 +28,18 @@ body {
     background-color: #8EBCF4;
     transform: scale(1.05);
 }
-
-footer {
-    margin-top: 3em;
-    font-size: 0.8rem;
-    color: #aaa;
+p {
+    font-size: 1.3rem;
+}
+.container {
+    text-align: center;
+    padding: 2em;
+    border-radius: 16px;
+    background-color: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    max-width: 40vw;
+    width: 100%;
+    box-sizing: border-box;
 }
 @media (max-width: 500px) {
     .container {
@@ -66,13 +47,6 @@ footer {
         padding: 1.5em;
     }
 
-    .title {
-        font-size: 2rem;
-    }
-
-    .subtitle {
-        font-size: 0.9rem;
-    }
 }
 @media (min-width: 2000px){
     .container {
@@ -84,5 +58,3 @@ footer {
         max-width: 18vw;
     }
 }
-
-

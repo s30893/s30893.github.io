@@ -61,7 +61,7 @@ body {
 }
 
 .forest {
-    background-color: greenyellow;
+    background-image: url("/images/forest.jpg");
 }
 
 .lake {
@@ -170,5 +170,85 @@ body {
 .player.flipped {
     transform: scaleX(-1);
 }
+/* Ukryj elementy domyślnie, jeśli ekran zbyt mały */
+.too-small {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2rem;
+    color: #444;
+    background-color: #fff6f6;
+    padding: 2em;
+    border: 2px solid #d88;
+    border-radius: 12px;
+    z-index: 9999;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: 1200px) {
+    body > *:not(.too-small) {
+        display: none !important;
+    }
+
+    .too-small {
+        display: block;
+    }
+}
+
+@media (min-width: 1280px) and (max-width: 2150px) {
+    .game {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .information {
+        width: 37%;
+        margin-top: 1em;
+    }
+
+    .howTo {
+        margin-top: 2em;
+        justify-content: center;
+    }
+
+    .howTo ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1em;
+    }
+    .dialog{
+        width: 100%;
+    }
+}
+
+@media (min-width: 2151px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .title {
+        text-align: center;
+        margin-top: 10%;
+    }
+
+    .game {
+        max-width: 2000px;
+        margin: 0 auto;
+        display: flex;
+        gap: 2em;
+    }
+
+    .information {
+        max-width: 600px;
+    }
+}
+
 
 

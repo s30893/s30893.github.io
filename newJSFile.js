@@ -1,4 +1,6 @@
 function openGame(){
+    localStorage.removeItem("whimsySave");
+    localStorage.removeItem("resumeGame");
     window.location.href = "gamePageNew.html";
 }
 function back(){
@@ -69,7 +71,7 @@ function generateMap() {
         }
     }
 
-    const player = document.createElement("div");
+    let player = document.createElement("div");
     player.classList.add("player");
     map.appendChild(player);
 
@@ -81,11 +83,11 @@ function generateMap() {
 }
 
 function updatePlayerPosition() {
-    const player = document.querySelector(".player");
+    let player = document.querySelector(".player");
     player.style.left = `${playerPosition.x * tileSize}px`;
     player.style.top = `${playerPosition.y * tileSize}px`;
 }
-
+//movement
 document.addEventListener("keydown", (e) => {
     let newX = playerPosition.x;
     let newY = playerPosition.y;
@@ -118,7 +120,7 @@ document.addEventListener("keydown", (e) => {
         }
     }
     updatePlayerPosition();
-    //dialog with home
+
     let x = playerPosition.x;
     let y = playerPosition.y;
     const adjacentTile = [
@@ -142,7 +144,7 @@ document.addEventListener("keydown", (e) => {
     } else {
         hint.classList.add("hidden");
     }
-
+//dialog with house
     if(e.key === "e" || e.key === "E") {
         if (mapData[y - 1]?.[x] === "h" || mapData[y + 1]?.[x] === "h" || mapData[y]?.[x - 1] === "h" || mapData[y]?.[x + 1] === "h") {
             let dialog = document.querySelector(".dialog");
@@ -152,6 +154,7 @@ document.addEventListener("keydown", (e) => {
 
         }
     }
+//dialog with tree
     if(e.key === "e" || e.key === "E") {
         if (mapData[y - 1]?.[x] === "t" || mapData[y + 1]?.[x] === "t" || mapData[y]?.[x - 1] === "t" || mapData[y]?.[x + 1] === "t") {
             let dialog = document.querySelector(".dialog");
@@ -161,6 +164,7 @@ document.addEventListener("keydown", (e) => {
 
         }
     }
+//dialog with lake
     if(e.key === "e" || e.key === "E") {
         if (mapData[y - 1]?.[x] === "l" || mapData[y + 1]?.[x] === "l" || mapData[y]?.[x - 1] === "l" || mapData[y]?.[x + 1] === "l") {
             let dialog = document.querySelector(".dialog");
@@ -170,8 +174,8 @@ document.addEventListener("keydown", (e) => {
 
         }
     }
+//dialog with tree - start of quest
     if(e.key === "e" || e.key === "E") {
-        // dialog with tree - start of quest
         if (!berryQuestStarted &&
             (mapData[y - 1]?.[x] === "t" || mapData[y + 1]?.[x] === "t" || mapData[y]?.[x - 1] === "t" || mapData[y]?.[x + 1] === "t")) {
 
@@ -210,8 +214,7 @@ document.addEventListener("keydown", (e) => {
                 }
             }
         });
-
-        // collecting berries
+ //collecting berries
         if (berryQuestAccepted && forestReady &&
             (mapData[y - 1]?.[x] === "f" || mapData[y + 1]?.[x] === "f" || mapData[y]?.[x - 1] === "f" || mapData[y]?.[x + 1] === "f")) {
 
@@ -223,7 +226,7 @@ document.addEventListener("keydown", (e) => {
             }
         }
     }
-    //end of quest
+//end of quest 1/3 and start of quest 2/3
     if(e.key === "e" || e.key === "E"){
             if (berriesCollected === 3 && !berryQuestCompleted &&
                 (mapData[y - 1]?.[x] === "t" || mapData[y + 1]?.[x] === "t" || mapData[y]?.[x - 1] === "t" || mapData[y]?.[x + 1] === "t")) {
@@ -239,6 +242,7 @@ document.addEventListener("keydown", (e) => {
                 }, 2000);
             }
         }
+//end of quest 2/3 and start of quest 3/3
     if (e.key === "e" || e.key === "E") {
         if (cakeQuestStarted && !cakeQuestCompleted &&
             (mapData[y - 1]?.[x] === "l" || mapData[y + 1]?.[x] === "l" ||
@@ -266,7 +270,7 @@ document.addEventListener("keydown", (e) => {
                 mapData[y]?.[x - 1] === "m" || mapData[y]?.[x + 1] === "m")) {
 
 
-            const mapIndex = (y - 1 >= 0 && mapData[y - 1][x] === "m") ? y - 1 :
+            let mapIndex = (y - 1 >= 0 && mapData[y - 1][x] === "m") ? y - 1 :
                 (y + 1 < mapHeight && mapData[y + 1][x] === "m") ? y + 1 :
                     (mapData[y]?.[x - 1] === "m") ? y :
                         (mapData[y]?.[x + 1] === "m") ? y : null;
@@ -275,14 +279,13 @@ document.addEventListener("keydown", (e) => {
                 amuletFound = true;
                 amuletTile.classList.remove("amulet");
 
-                const dialog = document.querySelector(".dialog");
+                let dialog = document.querySelector(".dialog");
                 dialog.classList.remove("hidden");
 
-                updateInfoBox("Amulet znaleziony! Zanieś go z powrotem kapibarze.");
+                updateInfoBox("Amulet znaleziony!");
             }
         }
-
-        // zakończenie questa
+//end of quest 3/3
         if (amuletFound && !amuletQuestCompleted &&
             (mapData[y - 1]?.[x] === "l" || mapData[y + 1]?.[x] === "l" ||
                 mapData[y]?.[x - 1] === "l" || mapData[y]?.[x + 1] === "l")) {
@@ -306,6 +309,7 @@ document.addEventListener("keydown", (e) => {
 
         }
     }
+//end of game
     if (e.key === "e" || e.key === "E") {
         if (endingUnlocked &&
             (mapData[y - 1]?.[x] === "h" || mapData[y + 1]?.[x] === "h" ||
@@ -314,15 +318,31 @@ document.addEventListener("keydown", (e) => {
             window.location.href = "thanks.html";
         }
     }
-
-
-
+//save game
+    if (e.key === "s" || e.key === "S") {
+        const data = {
+            position: playerPosition,
+            berriesCollected,
+            berryQuestStarted,
+            berryQuestAccepted,
+            berryQuestCompleted,
+            forestReady,
+            cakeQuestStarted,
+            cakeQuestCompleted,
+            amuletFound,
+            amuletQuestStarted,
+            amuletQuestCompleted,
+            endingUnlocked,
+        };
+        localStorage.setItem("whimsySave", JSON.stringify(data));
+        alert("Gra zapisana!");
+    }
 });
 function placeAmuletInMountains() {
-    const mountainTiles = document.querySelectorAll(".mountain"); // zakładamy, że "m" => class="mountain"
+    let mountainTiles = document.querySelectorAll(".mountain"); // zakładamy, że "m" => class="mountain"
     if (mountainTiles.length === 0) return;
 
-    const index = Math.floor(Math.random() * mountainTiles.length);
+    let index = Math.floor(Math.random() * mountainTiles.length);
     amuletTile = mountainTiles[index];
     amuletTile.classList.add("amulet");
 }
@@ -341,17 +361,46 @@ function updateInfoBox(text = "", berries = null) {
 
 //flashing forest tile
 function flashForestTile() {
-    const tile = document.querySelector(".forest");
+    let tile = document.querySelector(".forest");
 
     tile.classList.add("glow");
     forestReady = true;
 }
-
+function continueGame() {
+    let saveData = localStorage.getItem("whimsySave");
+    if (saveData) {
+        localStorage.setItem("resumeGame", "true");
+        window.location.href = "gamePageNew.html";
+    } else {
+        window.location.href= "noSave.html";
+    }
+}
 
 window.onload = function () {
+    let resume = localStorage.getItem("resumeGame");
+    if (resume === "true") {
+        let save = JSON.parse(localStorage.getItem("whimsySave"));
+        if (save) {
+            playerPosition = save.position || { x: 1, y: 1 };
+            berriesCollected = save.berriesCollected || 0;
+            berryQuestStarted = save.berryQuestStarted || false;
+            berryQuestAccepted = save.berryQuestAccepted || false;
+            berryQuestCompleted = save.berryQuestCompleted || false;
+            forestReady = save.forestReady || false;
+            cakeQuestStarted = save.cakeQuestStarted || false
+            cakeQuestCompleted = save.cakeQuestCompleted || false;
+            amuletFound = save.amuletFound || false;
+            amuletQuestStarted = save.amuletQuestStarted || false;
+            amuletQuestCompleted = save.amuletQuestCompleted || false;
+            endingUnlocked = save.endingUnlocked || false;
+        }
+        localStorage.removeItem("resumeGame");
+    }
+
     generateMap();
     updatePlayerPosition();
 };
+//close dialog
 document.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         let dialog = document.querySelector(".dialog");

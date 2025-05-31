@@ -2,11 +2,11 @@ window.onload = function () {
     document.getElementById("surveyForm").addEventListener("submit", function (e) {
         e.preventDefault();
 
-        const name = document.getElementById("name").value;
-        const rating = document.getElementById("rating").value;
-        const comment = document.getElementById("comment").value;
+        let name = document.getElementById("name").value;
+        let rating = document.getElementById("rating").value;
+        let comment = document.getElementById("comment").value;
 
-        const data = {
+        let data = {
             reviewer_name: name,
             rating: rating,
             review_text: comment,

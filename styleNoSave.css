@@ -58,3 +58,11 @@ p {
         max-width: 18vw;
     }
 }
+@media(max-width: 400px){
+    .container{
+        padding: 1em;
+    }
+    h1{
+        font-size: 2em;
+    }
+}

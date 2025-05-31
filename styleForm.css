@@ -79,3 +79,16 @@ p {
         max-width: 18vw;
     }
 }
+@media(max-width: 500px){
+    h1{
+        font-size: 2em;
+    }
+}
+@media(max-width: 900px){
+    input{
+        width: 100%;
+    }
+    textarea{
+        width: 100%;
+    }
+}

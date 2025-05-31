@@ -170,7 +170,7 @@ body {
 .player.flipped {
     transform: scaleX(-1);
 }
-/* Ukryj elementy domyślnie, jeśli ekran zbyt mały */
+
 .too-small {
     position: fixed;
     top: 50%;

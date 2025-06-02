@@ -6,8 +6,8 @@ function openGame(){
 function back(){
     window.location.href= "index.html";
 }
-function form(){
-    window.location.href ="form.html";
+function formula(){
+    window.location.href = "form.html";
 }
 const mapData = [
     ["f", " ", " ", " ", " ", " ", " ", "m"],

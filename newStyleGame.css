@@ -190,7 +190,7 @@ body {
     display: none;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1199px) {
     body > *:not(.too-small) {
         display: none !important;
     }
@@ -199,7 +199,7 @@ body {
         display: block;
     }
 }
-
+/*
 @media (min-width: 1280px) and (max-width: 1920px) {
     .game {
         flex-direction: column;
@@ -225,8 +225,8 @@ body {
         width: 100%;
     }
 }
-
-@media (min-width: 1921px) {
+*/
+@media (min-width: 1300px){
     body {
         display: flex;
         flex-direction: column;
